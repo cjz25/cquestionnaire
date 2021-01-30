@@ -25,7 +25,6 @@ Create a virtual environment:
 ```sh
 $ cd cquestionnaire/
 $ python3 -m venv env
-$ source env/bin/activate
 ```
 
 Activate the virtual environment:
@@ -66,18 +65,22 @@ $ python3 manage.py runserver
 ### You have the following APIs:
 
 For questionnaires:
-* GET: /api/questionnaires/
-* POST: /api/questionnaires/
-* GET: /api/questionnaires/<pk>/
-* PUT: /api/questionnaires/<pk>/
-* DELETE: /api/questionnaires/<pk>/
+```
+GET: /api/questionnaires/
+POST: /api/questionnaires/
+GET: /api/questionnaires/<pk>/
+PUT: /api/questionnaires/<pk>/
+DELETE: /api/questionnaires/<pk>/
+```
 
 For questions with choices:
-* GET: /questionnaires/<questionnaire_pk>/questions/
-* POST: /questionnaires/<questionnaire_pk>/questions/
-* GET: /questionnaires/<questionnaire_pk>/questions/<pk>/
-* PUT: /questionnaires/<questionnaire_pk>/questions/<pk>/
-* DELETE: /questionnaires/<questionnaire_pk>/questions/<pk>/
+```
+GET: /questionnaires/<questionnaire_pk>/questions/
+POST: /questionnaires/<questionnaire_pk>/questions/
+GET: /questionnaires/<questionnaire_pk>/questions/<pk>/
+PUT: /questionnaires/<questionnaire_pk>/questions/<pk>/
+DELETE: /questionnaires/<questionnaire_pk>/questions/<pk>/
+```
 
 ## License
 MIT License
