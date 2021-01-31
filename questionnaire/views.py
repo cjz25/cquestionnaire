@@ -18,7 +18,7 @@ class QuestionnaireViewSet(viewsets.ModelViewSet):
                 ).prefetch_related(
                     Prefetch(
                         'choices',
-                        queryset=QuestionChoice.objects.order_by('choice_no')
+                        queryset=QuestionChoice.objects.order_by('seq')
                     )
                 )
             )
@@ -34,7 +34,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
         ).prefetch_related(
             Prefetch(
                 'choices',
-                queryset=QuestionChoice.objects.order_by('choice_no')
+                queryset=QuestionChoice.objects.order_by('seq')
             )
         )
 
@@ -45,5 +45,5 @@ class QuestionViewSet(viewsets.ModelViewSet):
     def update(self, request, pk=None, questionnaire_pk=None):
         request.data['questionnaire'] = questionnaire_pk
         response = super().update(request)
-        response.data['choices'] = sorted(response.data['choices'], key=lambda x: x['choice_no'])
+        response.data['choices'] = sorted(response.data['choices'], key=lambda x: x['seq'])
         return response

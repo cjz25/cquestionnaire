@@ -45,7 +45,7 @@ class Question(models.Model):
 
 class QuestionChoice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
-    choice_no = models.CharField(max_length=2)
+    seq = models.PositiveSmallIntegerField()
     item = models.CharField(max_length=100)
 
     def __str__(self):
