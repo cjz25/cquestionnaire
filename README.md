@@ -75,11 +75,11 @@ DELETE: /api/questionnaires/<pk>/
 
 For questions with choices:
 ```
-GET: /questionnaires/<questionnaire_pk>/questions/
-POST: /questionnaires/<questionnaire_pk>/questions/
-GET: /questionnaires/<questionnaire_pk>/questions/<pk>/
-PUT: /questionnaires/<questionnaire_pk>/questions/<pk>/
-DELETE: /questionnaires/<questionnaire_pk>/questions/<pk>/
+GET: /api/questionnaires/<questionnaire_pk>/questions/
+POST: /api/questionnaires/<questionnaire_pk>/questions/
+GET: /api/questionnaires/<questionnaire_pk>/questions/<pk>/
+PUT: /api/questionnaires/<questionnaire_pk>/questions/<pk>/
+DELETE: /api/questionnaires/<questionnaire_pk>/questions/<pk>/
 ```
 
 ## License

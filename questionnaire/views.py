@@ -1,6 +1,7 @@
 from django.db.models import Prefetch
 
 from rest_framework import viewsets
+from rest_framework.response import Response
 
 from .models import Question, QuestionChoice, Questionnaire
 from .serializers import QuestionnaireSerializer, QuestionSerializer
@@ -23,6 +24,10 @@ class QuestionnaireViewSet(viewsets.ModelViewSet):
                 )
             )
         )
+
+    def list(self, request):
+        queryset = Questionnaire.objects.all()
+        return Response(queryset.values())
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
