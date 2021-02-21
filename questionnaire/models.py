@@ -43,6 +43,15 @@ class Question(models.Model):
         return f'{self.questionnaire.title} | {self.title}'
 
 
+class QuestionSequence(models.Model):
+    questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    seq = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        unique_together = (('questionnaire', 'question'),)
+
+
 class QuestionChoice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
     seq = models.PositiveSmallIntegerField()
@@ -50,6 +59,15 @@ class QuestionChoice(models.Model):
 
     def __str__(self):
         return f'{self.question.title} | {self.item}'
+
+
+class QuestionChoiceSequence(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    questionchoice = models.ForeignKey(QuestionChoice, on_delete=models.CASCADE)
+    seq = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        unique_together = (('question', 'questionchoice'),)
 
 
 # response master
