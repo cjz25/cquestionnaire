@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class Questionnaire(models.Model):
     title = models.CharField(max_length=50)
-    description = models.TextField()
+    description = models.TextField(blank=True, default='')
     # created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     updated_dtm = models.DateTimeField(auto_now=True)
 
@@ -30,7 +30,7 @@ class Question(models.Model):
     )
     seq = models.PositiveSmallIntegerField(default=0)
     title = models.CharField(max_length=50)
-    description = models.TextField()
+    description = models.TextField(blank=True, default='')
     required = models.BooleanField()
     question_type = models.CharField(
         max_length=2,
