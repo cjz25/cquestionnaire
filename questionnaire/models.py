@@ -28,7 +28,6 @@ class Question(models.Model):
         on_delete=models.CASCADE,
         related_name='questions'
     )
-    seq = models.PositiveSmallIntegerField(default=0)
     title = models.CharField(max_length=50)
     description = models.TextField(blank=True, default='')
     required = models.BooleanField()
@@ -54,7 +53,6 @@ class QuestionSequence(models.Model):
 
 class QuestionChoice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
-    seq = models.PositiveSmallIntegerField()
     item = models.CharField(max_length=100)
 
     def __str__(self):

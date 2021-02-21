@@ -16,10 +16,11 @@ class QuestionnaireViewSet(viewsets.ModelViewSet):
                 'questions',
                 queryset=Question.objects.filter(
                     questionnaire=self.kwargs['pk']
-                ).prefetch_related(
+                ).order_by('questionsequence__seq')
+                .prefetch_related(
                     Prefetch(
                         'choices',
-                        queryset=QuestionChoice.objects.order_by('seq')
+                        queryset=QuestionChoice.objects.order_by('questionchoicesequence__seq')
                     )
                 )
             )
@@ -39,7 +40,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
         ).prefetch_related(
             Prefetch(
                 'choices',
-                queryset=QuestionChoice.objects.order_by('seq')
+                queryset=QuestionChoice.objects.order_by('questionchoicesequence__seq')
             )
         )
 
