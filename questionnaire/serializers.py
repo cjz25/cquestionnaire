@@ -53,11 +53,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         return question
 
     def update(self, instance, validated_data):
-        new_question_seq = validated_data.pop('seq', 0)
-
-        self.__updateQuestionSequence(
-            new_question_seq, instance.questionnaire, instance.id
-        )
+        validated_data.pop('seq', 0)
 
         choices_data = validated_data.pop('choices', [])
 
@@ -68,29 +64,6 @@ class QuestionSerializer(serializers.ModelSerializer):
         self.__updateChoice(instance, choices_data)
 
         return instance
-
-    def __updateQuestionSequence(self, new_seq, questionnaire_id, question_id):
-        old_questionsequence = QuestionSequence.objects.get(
-            questionnaire=questionnaire_id, question=question_id)
-
-        if new_seq == old_questionsequence.seq:
-            return
-
-        if new_seq < old_questionsequence.seq:
-            (QuestionSequence.objects
-                .filter(questionnaire=questionnaire_id)
-                .filter(seq__gte=new_seq)
-                .filter(seq__lt=old_questionsequence.seq)
-                .update(seq=F('seq') + 1))
-        else:
-            (QuestionSequence.objects
-                .filter(questionnaire=questionnaire_id)
-                .filter(seq__gt=old_questionsequence.seq)
-                .filter(seq__lte=new_seq)
-                .update(seq=F('seq') - 1))
-
-        old_questionsequence.seq = new_seq
-        old_questionsequence.save()
 
     def __updateChoice(self, instance, choices_data):
         if choices_data is None:
@@ -141,3 +114,33 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
     class Meta:
         model = Questionnaire
         fields = '__all__'
+
+
+class SequenceSerializer(serializers.Serializer):
+    old_seq = serializers.IntegerField(required=False)
+    new_seq = serializers.IntegerField(required=True)
+
+    def update_questionsequence(self, questionnaire_id, question_id):
+        old_questionsequence = QuestionSequence.objects.get(
+            questionnaire=questionnaire_id, question=question_id)
+
+        new_seq = self.initial_data['new_seq']
+
+        if new_seq == old_questionsequence.seq:
+            return
+
+        if new_seq < old_questionsequence.seq:
+            (QuestionSequence.objects
+                .filter(questionnaire=questionnaire_id)
+                .filter(seq__gte=new_seq)
+                .filter(seq__lt=old_questionsequence.seq)
+                .update(seq=F('seq') + 1))
+        else:
+            (QuestionSequence.objects
+                .filter(questionnaire=questionnaire_id)
+                .filter(seq__gt=old_questionsequence.seq)
+                .filter(seq__lte=new_seq)
+                .update(seq=F('seq') - 1))
+
+        old_questionsequence.seq = new_seq
+        old_questionsequence.save()

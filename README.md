@@ -82,5 +82,10 @@ PUT: /api/questionnaires/<questionnaire_pk>/questions/<pk>/
 DELETE: /api/questionnaires/<questionnaire_pk>/questions/<pk>/
 ```
 
+For modifying the sequence of a question:
+```
+PUT: /api/questionnaires/<questionnaire_pk>/questions/<pk>/sequence/
+```
+
 ## License
 MIT License
