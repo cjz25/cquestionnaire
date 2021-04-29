@@ -66,7 +66,7 @@ $ python3 manage.py runserver
 
 For questionnaires:
 ```
-GET: /api/questionnaires/
+GET: /api/questionnaires/list?size=5&page=1
 POST: /api/questionnaires/
 GET: /api/questionnaires/<pk>/
 PUT: /api/questionnaires/<pk>/

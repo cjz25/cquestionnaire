@@ -1,18 +1,35 @@
 from django.db.models import Prefetch
 
-from rest_framework import status, viewsets
+from rest_framework import mixins, status, viewsets
 from rest_framework.decorators import action
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 
 from .models import Question, QuestionSequence, QuestionChoice, Questionnaire
+
+from .pagination import QuestionnairePageNumberPagination
+
 from .serializers import (
-    QuestionnaireSerializer, QuestionSerializer,
-    QuestionChoiceSerializer, SequenceSerializer
+    QuestionnaireSerializer, QuestionnaireWithQuestionSerializer,
+    QuestionSerializer, QuestionChoiceSerializer, SequenceSerializer
 )
 
 
-class QuestionnaireViewSet(viewsets.ModelViewSet):
+class QuestionnaireListAPIView(ListAPIView):
     serializer_class = QuestionnaireSerializer
+    pagination_class = QuestionnairePageNumberPagination
+
+    def get_queryset(self):
+        queryset = Questionnaire.objects.all().order_by('-updated_dtm')
+        return queryset
+
+
+class QuestionnaireViewSet(mixins.CreateModelMixin,
+                           mixins.RetrieveModelMixin,
+                           mixins.UpdateModelMixin,
+                           mixins.DestroyModelMixin,
+                           viewsets.GenericViewSet):
+    serializer_class = QuestionnaireWithQuestionSerializer
 
     def get_queryset(self):
         return Questionnaire.objects.prefetch_related(
@@ -29,10 +46,6 @@ class QuestionnaireViewSet(viewsets.ModelViewSet):
                 )
             )
         )
-
-    def list(self, request):
-        queryset = Questionnaire.objects.all()
-        return Response(queryset.values())
 
 
 class QuestionViewSet(viewsets.ModelViewSet):

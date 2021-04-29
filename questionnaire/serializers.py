@@ -109,11 +109,13 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class QuestionnaireSerializer(serializers.ModelSerializer):
-    questions = QuestionSerializer(many=True, read_only=True, required=False)
-
     class Meta:
         model = Questionnaire
         fields = '__all__'
+
+
+class QuestionnaireWithQuestionSerializer(QuestionnaireSerializer):
+    questions = QuestionSerializer(many=True, read_only=True, required=False)
 
 
 class SequenceSerializer(serializers.Serializer):
