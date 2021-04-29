@@ -26,10 +26,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'questionnaire',  # questionnaire.apps.QuestionnaireConfig
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,6 +60,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'djangovue.wsgi.application'
+
+
+# CORS
+# https://github.com/adamchainz/django-cors-headers#cors_allowed_origins
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+    "http://127.0.0.1:8080"
+]
 
 
 # Database
